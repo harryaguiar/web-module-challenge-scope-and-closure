@@ -28,6 +28,8 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * counter1 uses closure while counter2 uses hoisting
+ * 
  * 2. Which of the two uses a closure? How can you tell?
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
@@ -44,6 +46,8 @@ function counterMaker() {
 
 const counter1 = counterMaker();
 
+console.log(counter1());
+
 // counter2 code
 let count = 0;
 
@@ -51,16 +55,20 @@ function counter2() {
   return count++;
 }
 
+console.log(counter2());
+
 
 /* Task 2: inning() 
 
 Write a function called `inning` that returns a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
+function inning(){
 
-    /*Code Here*/
-
+  let points = Math.floor(Math.random() * 3)
+  return points;
 }
+
+console.log(inning());
 
 /* Task 3: finalScore()
 
@@ -76,34 +84,56 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
+function finalScore(callback, numberInnings/*code Here*/){
 
-  /*Code Here*/
+let finalScore = {};
+let homeScore = 0;
+let awayScore = 0;
+
+
+for (let i = 0; i <= numberInnings; i++) {
+  awayScore = awayScore + callback();
+  homeScore = homeScore + callback();
+  
+}
+  
+  finalScore.Home = homeScore;
+  finalScore.Away = awayScore;
+  
+
+  return finalScore;
 
 }
+
+console.log(finalScore(inning, 9));
 
 /* Task 4: 
 
 Create a function called `scoreboard` that accepts the following parameters: 
 
-(1) Callback function `inning` that you wrote above
-(2) A number of innings
+(1) Callback function `getInningScore`
+(2) Callback function `inning`
+(3) A number of innings
 
 and returns the score at each pont in the game, like so:
+1st inning: awayTeam - homeTeam
+2nd inning: awayTeam - homeTeam
+3rd inning: awayTeam - homeTeam
+4th inning: awayTeam - homeTeam
+5th inning: awayTeam - homeTeam
+6th inning: awayTeam - homeTeam
+7th inning: awayTeam - homeTeam
+8th inning: awayTeam - homeTeam
+9th inning: awayTeam - homeTeam
+Final Score: awayTeam - homeTeam */
 
-1st inning: 0 - 2
-2nd inning: 1 - 3
-3rd inning: 1 - 3
-4th inning: 2 - 4
-5th inning: 4 - 6
-6th inning: 4 - 6
-7th inning: 4 - 6
-8th inning: 5 - 8
-9th inning: 6 - 10
 
-Final Score: 6 - 10 */
+function scoreboard(getInningScore, inning, numberInnings) {
 
-function scoreboard(/* CODE HERE */) {
+  for (let inning = 0; inning < array.length; inning++) {
+    const element = array[inning];
+    
+  }
   /* CODE HERE */
 }
 
