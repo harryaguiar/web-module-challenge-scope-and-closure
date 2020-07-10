@@ -28,13 +28,15 @@ function processFirstItem(stringList, callback) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
- * counter1 uses closure while counter2 uses hoisting
+ * counter1 uses closure while counter2 uses global variable
  * 
  * 2. Which of the two uses a closure? How can you tell?
+ * coounter1 as everything is inside the function, it does not need a variable outside the function to be accessed.
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
- *
-*/
+ * counter1 variable is private, protected from mutation. <-
+ * count2 if needs to have multiple things adding to the counter <-
+ */
 
 // counter1 code
 function counterMaker() {
@@ -68,7 +70,7 @@ function inning(){
   return points;
 }
 
-console.log(inning());
+console.log("Task 2:" , inning());
 
 /* Task 3: finalScore()
 
@@ -84,7 +86,7 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(callback, numberInnings/*code Here*/){
+function finalScore(callback, numberInnings){
 
 let finalScore = {};
 let homeScore = 0;
@@ -105,7 +107,7 @@ for (let i = 0; i <= numberInnings; i++) {
 
 }
 
-console.log(finalScore(inning, 9));
+console.log("Task 3:" , finalScore(inning, 9));
 
 /* Task 4: 
 
@@ -127,14 +129,37 @@ and returns the score at each pont in the game, like so:
 9th inning: awayTeam - homeTeam
 Final Score: awayTeam - homeTeam */
 
+/*  */
 
-function scoreboard(getInningScore, inning, numberInnings) {
-
-  for (let inning = 0; inning < array.length; inning++) {
-    const element = array[inning];
+function getInningScore(numberInningCB){
+  let home = 0;
+  let away = 0;
+  return function (){
+    home += numberInningCB();
+    away += numberInningCB();
+    // console.log({Home: home, Away: away});
+    return {Home: home, Away: away};
     
   }
-  /* CODE HERE */
 }
 
+function scoreboard(getInningScoreCB, inningCB, numberInnings) {
 
+  const scoreByInning = [];
+  const temp = getInningScoreCB(inningCB);
+
+for (let i = 0; i < numberInnings; i++) {
+  scoreByInning.push(temp())
+
+  console.log(`Inning ${i + 1} : Home ${scoreByInning[i].Home} - Away ${scoreByInning[i].Away}`);
+  
+}
+
+// console.log("Final Score: Home" , scoreByInning[8].Home , "- Away", scoreByInning[8].Away);
+console.log(`Final Score: Home ${scoreByInning[8].Home} - Away ${scoreByInning[8].Away}`);
+
+
+}
+
+console.log(scoreboard(getInningScore, inning, 9));
+// console.log(object);
